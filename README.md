@@ -10,3 +10,5 @@ Glmnet, a package to fit generalized linear models with penalties like rigde and
 Definitely for fitting the linear models, it can take a couple of hours of runtime to perform cross validation (10 folds). For the bottleneck neural network frameworks cross validation takes less time (~10s of minutes). If performed once, the data can be pickled however, so that one does not need to rerun the models everytime for plotting.
 
 Note: Keras arrives at slightly different training results every time you rerun the same simulation. To reproduce exact results in the paper check out the folder KerasSavedModels.
+
+Work conducted under supervision of Philipp Berens.
