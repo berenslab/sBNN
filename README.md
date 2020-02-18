@@ -11,7 +11,7 @@ For fitting the linear models, it can take a couple of hours of runtime to perfo
 
 Note 1: Keras arrives at slightly different training results every time you rerun the same simulation. To reproduce exact results and figures like in the paper check out the folder KerasSavedModels.
 
-Note 2: all the raw data can be found in the folder M1Data which are needed to run the two notebooks all the way, except for M1_combined_counts.tab which is too large for GitHub to handle. Please use the e-mailaddress below for now to ask to work with this final file as well. We are working on a way around this. Also check https://www.biorxiv.org/content/10.1101/2020.02.03.929158v1, which is the original publication working with this data.
+Note 2: all the raw data can be found in the folder M1Data which are needed to run the two notebooks all the way, except for M1_combined_counts.tab which is too large for GitHub to handle. Please use the e-mailaddress below for now to ask to work with this final file as well. We are working on a way around this. Also check https://www.biorxiv.org/content/10.1101/2020.02.03.929158v1, which is the original paper (under review) working with this data.
 
 Work conducted under supervision of Philipp Berens.
 Contact yves.bernaerts@uni-tuebingen.de
