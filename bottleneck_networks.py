@@ -91,7 +91,7 @@ class ClassificationPreTrain:
                   optimizer=keras.optimizers.Adam(lr=self.lr), \
                   metrics=[metrics.categorical_crossentropy])
         
-    def train(self, x_train, cluster_train, x_test, cluster_test, epochs, bs, patience, cvfold_id=0, l1_id=0, l2_id=0):
+    def train(self, x_train, cluster_train, x_test, cluster_test, epochs, bs, patience, cvfold_id=0, l1_id=0, l2_id=0, verbose=1):
         """
         Train the bottleneck.
         
@@ -105,6 +105,7 @@ class ClassificationPreTrain:
         :param cvfold_id: int, cross validation set id (optional, default=0), for saving
         :param l1_id: int, lasso penalty id (optional, default=0), for saving
         :param l2_id: int, ridge penalty id (optional, default=0), for saving
+        :param verbose: int, print info or not (optional, default=1, i.e. print info -- verbose=0 means not printing info)
         
         Returns
         -------
@@ -112,15 +113,15 @@ class ClassificationPreTrain:
         """
         
         # Settings for early stopping and saving best model 
-        es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=patience)
+        es = EarlyStopping(monitor='val_loss', mode='min', verbose=verbose, patience=patience)
         mc = ModelCheckpoint('KerasSavedModels/Classification_weights_{}_{}_{}.h5'.format(cvfold_id, l1_id, l2_id), \
-                             monitor='val_categorical_crossentropy', mode='min', verbose=1, save_best_only=True)
+                             monitor='val_categorical_crossentropy', mode='min', verbose=verbose, save_best_only=True)
 
         # train the network
         print("[INFO] training network...")
         H = self.m.fit(x_train, to_categorical(cluster_train), batch_size=bs,
             validation_data=(x_test, to_categorical(cluster_test)),
-            epochs=epochs, verbose=1, callbacks=[es, mc])
+            epochs=epochs, verbose=verbose, callbacks=[es, mc])
         
         
         # Retrieve activations and ephys prediction
@@ -192,7 +193,7 @@ class StraightRegression:
                        optimizer=keras.optimizers.Adam(lr=lr), \
                        metrics=[r2_score, 'mse'])
         
-    def train(self, x_train, y_train, x_test, y_test, epochs, bs, patience, cvfold_id=0, l1_id=0, l2_id=0, \
+    def train(self, x_train, y_train, x_test, y_test, epochs, bs, patience, cvfold_id=0, l1_id=0, l2_id=0, verbose=1, \
               prune=False, geneNames=None):
         """
         Train the bottleneck. If you don't prune the training lasts for epochs iterations. If you prune the training lasts for 4*epochs
@@ -208,6 +209,7 @@ class StraightRegression:
         :param cvfold_id: int, cross validation set id (optional, default=0), for saving
         :param l1_id: int, lasso penalty id (optional, default=0), for saving
         :param l2_id: int, ridge penalty id (optional, default=0), for saving
+        :param verbose: int, print info or not (optional, default=1, i.e. print info -- verbose=0 means not printing info)
         :param prune: bool, if True we additionally prune the network (new input layer with lower dimensionality)
                       (optional, default=False)
         :param geneNames: numpy 1D array, contains name of the corresponding gene of every input neuron (optional, default=None)
@@ -219,27 +221,27 @@ class StraightRegression:
         
         # Settings for early stopping and saving best model
         if not prune:
-            es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=1, patience=patience)
+            es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=verbose, patience=patience)
         else:
-            es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=1, patience=2*patience)
+            es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=verbose, patience=2*patience)
             
         if not self.pre_trained_weights:
             mc = ModelCheckpoint('KerasSavedModels/StraightRegression_weights_{}_{}_{}.h5'.format(cvfold_id, l1_id, l2_id), \
-                             monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)
+                             monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)
         else:
             mc = ModelCheckpoint('KerasSavedModels/PreTrRegression_weights_{}_{}_{}.h5'.format(cvfold_id, l1_id, l2_id), \
-                             monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)
+                             monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)
 
         # train the network
         print("[INFO] training network...")
         if not prune:
             H = self.m.fit(x_train, y_train, batch_size=bs,
                 validation_data=(x_test, y_test),
-                epochs=epochs, verbose=1, callbacks = [es, mc])
+                epochs=epochs, verbose=verbose, callbacks = [es, mc])
         else:
             H = self.m.fit(x_train, y_train, batch_size=bs,
                 validation_data=(x_test, y_test),
-                epochs=2*epochs, verbose=1, callbacks = [es, mc])           
+                epochs=2*epochs, verbose=verbose, callbacks = [es, mc])           
         
         train_loss_straight_regr = np.array(H.history["r2_score"])
         val_loss_straight_regr = np.array(H.history["val_r2_score"])
@@ -292,22 +294,22 @@ class StraightRegression:
             self.m.get_layer('W1_25').set_weights([weight[ind_genes, :], bias])
             self.m.compile(loss='mse', optimizer=keras.optimizers.Adam(lr=self.lr/2), metrics=[r2_score, 'mse'])
 
-            es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=1, patience=2*patience)
+            es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=verbose, patience=2*patience)
             
             if not self.pre_trained_weights:
                 mc = ModelCheckpoint('KerasSavedModels/StraightRegression_weights_after_pruning_{}_{}_{}.h5'.\
                                      format(cvfold_id, l1_id, l2_id), \
-                                     monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)
+                                     monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)
             else:
                 mc = ModelCheckpoint('KerasSavedModels/PreTrRegression_weights_after_pruning_{}_{}_{}.h5'.\
                                      format(cvfold_id, l1_id, l2_id), \
-                                     monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)                
+                                     monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)                
 
             # train the network
             print("[INFO] training network...")
             H = self.m.fit(x_train[:, ind_genes], y_train, batch_size=bs,
                 validation_data=(x_test[:, ind_genes], y_test),
-                epochs=2*epochs, verbose=1, callbacks = [es, mc])
+                epochs=2*epochs, verbose=verbose, callbacks = [es, mc])
             
             train_loss_straight_regr = np.concatenate([train_loss_straight_regr, np.array(H.history["r2_score"])])
             val_loss_straight_regr = np.concatenate([val_loss_straight_regr, np.array(H.history["val_r2_score"])])
@@ -398,8 +400,10 @@ class FreezeUnfreeze:
                     trainable = self.unfreeze[5], \
                     #bias_regularizer=regularizers.l2(l2_parameter), \
                     name = 'W6_regr'))
-        for layer in self.m.layers:
-            print(layer, 'trainable?', layer.trainable)
+        
+        #for layer in self.m.layers:
+        #    print(layer, 'trainable?', layer.trainable)
+        
         # Load weights from training a previous network on classification
         if self.pre_trained_weights:
             self.m.load_weights(pre_trained_weights_h5, by_name=True) 
@@ -407,7 +411,7 @@ class FreezeUnfreeze:
                        optimizer=keras.optimizers.Adam(lr=lr), \
                        metrics=[r2_score, 'mse'])
         
-    def train(self, x_train, y_train, x_test, y_test, epochs, bs, patience, cvfold_id=0, l1_id=0, l2_id=0, \
+    def train(self, x_train, y_train, x_test, y_test, epochs, bs, patience, cvfold_id=0, l1_id=0, l2_id=0, verbose=1, \
               prune=False, geneNames=None):
         """
         Train the bottleneck. If you don't prune the training lasts for 2*epochs iterations (freezing+unfreezing). If you prune the
@@ -423,6 +427,7 @@ class FreezeUnfreeze:
         :param cvfold_id: int, cross validation set id (optional, default=0), for saving
         :param l1_id: int, lasso penalty id (optional, default=0), for saving
         :param l2_id: int, ridge penalty id (optional, default=0), for saving
+        :param verbose: int, print info or not (optional, default=1, i.e. print info -- verbose=0 means not printing info)
         :param prune: bool, if True we additionally prune the network (new input layer with lower dimensionality)
                       (optional, default=False)
         :param geneNames: numpy 1D array, contains name of the corresponding gene of every input neuron (optional, default=None)
@@ -433,21 +438,21 @@ class FreezeUnfreeze:
         """
         
         # Settings for early stopping and saving best model 
-        es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=1, patience=patience)
+        es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=verbose, patience=patience)
         if not self.pre_trained_weights:
             mc = ModelCheckpoint('KerasSavedModels/FreezeUnfreeze_weights_before_unfreezing_{}_{}_{}.h5'.\
                                  format(cvfold_id, l1_id, l2_id), \
-                                 monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)
+                                 monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)
         else:
             mc = ModelCheckpoint('KerasSavedModels/PreTrFreezeUnfreeze_weights_before_unfreezing_{}_{}_{}.h5'.\
                                  format(cvfold_id, l1_id, l2_id), \
-                                 monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)
+                                 monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)
 
         # train the network
         print("[INFO] training network...")
         H = self.m.fit(x_train, y_train, batch_size=bs,
             validation_data=(x_test, y_test),
-            epochs=epochs, verbose=1, callbacks = [es, mc])
+            epochs=epochs, verbose=verbose, callbacks = [es, mc])
         train_loss_freeze_unfreeze = np.array(H.history["r2_score"])
         val_loss_freeze_unfreeze = np.array(H.history["val_r2_score"])
         
@@ -455,8 +460,9 @@ class FreezeUnfreeze:
         # Now UNFREEZE all layers
         for layer in self.m.layers:
             layer.trainable = True
-        for layer in self.m.layers:
-            print(layer, 'trainable?', layer.trainable)
+        if verbose!=0:
+            for layer in self.m.layers:
+                print(layer, 'trainable?', layer.trainable)
             
         # Since we’ve unfrozen additional layers, we must re-compile the model and let us decrease the learning rate by a half
         self.m.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(lr=self.lr/2), metrics=[r2_score, 'mse'])
@@ -466,18 +472,18 @@ class FreezeUnfreeze:
         if not self.pre_trained_weights:
             mc = ModelCheckpoint('KerasSavedModels/FreezeUnfreeze_weights_after_unfreezing_{}_{}_{}.h5'.\
                                  format(cvfold_id, l1_id, l2_id), \
-                                 monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)
+                                 monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)
         else:
             mc = ModelCheckpoint('KerasSavedModels/PreTrFreezeUnfreeze_weights_after_unfreezing_{}_{}_{}.h5'.\
                                  format(cvfold_id, l1_id, l2_id), \
-                                 monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)
+                                 monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)
         
         
         # train the network again
         print("[INFO] training network...")
         H = self.m.fit(x_train, y_train, batch_size=bs,
             validation_data=(x_test, y_test),
-            epochs=epochs, verbose=1, callbacks = [es, mc])
+            epochs=epochs, verbose=verbose, callbacks = [es, mc])
         train_loss_freeze_unfreeze = np.concatenate([train_loss_freeze_unfreeze, np.array(H.history["r2_score"])])
         val_loss_freeze_unfreeze = np.concatenate([val_loss_freeze_unfreeze, np.array(H.history["val_r2_score"])])
         
@@ -538,22 +544,22 @@ class FreezeUnfreeze:
             self.m.get_layer('W1_25').set_weights([weight[ind_genes, :], bias])
             self.m.compile(loss='mse', optimizer=keras.optimizers.Adam(lr=self.lr/2), metrics=[r2_score, 'mse'])
 
-            es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=1, patience=2*patience)
+            es = EarlyStopping(monitor='val_mean_squared_error', mode='min', verbose=verbose, patience=2*patience)
             
             if not self.pre_trained_weights:
                 mc = ModelCheckpoint('KerasSavedModels/FreezeUnfreeze_weights_after_unfreezing_and_pruning_{}_{}_{}.h5'.\
                                      format(cvfold_id, l1_id, l2_id), \
-                                     monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)
+                                     monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)
             else:
                 mc = ModelCheckpoint('KerasSavedModels/PreTrFreezeUnfreeze_weights_after_unfreezing_and_pruning_{}_{}_{}.h5'.\
                                      format(cvfold_id, l1_id, l2_id), \
-                                     monitor='val_mean_squared_error', mode='min', verbose=1, save_best_only=True)                
+                                     monitor='val_mean_squared_error', mode='min', verbose=verbose, save_best_only=True)                
 
             # train the network
             print("[INFO] training network...")
             H = self.m.fit(x_train[:, ind_genes], y_train, batch_size=bs,
                 validation_data=(x_test[:, ind_genes], y_test),
-                epochs=2*epochs, verbose=1, callbacks = [es, mc])
+                epochs=2*epochs, verbose=verbose, callbacks = [es, mc])
             train_loss_freeze_unfreeze = np.concatenate([train_loss_freeze_unfreeze, np.array(H.history["r2_score"])])
             val_loss_freeze_unfreeze = np.concatenate([val_loss_freeze_unfreeze, np.array(H.history["val_r2_score"])])
         
@@ -591,7 +597,7 @@ class FreezeUnfreeze:
                    r2_after_unfreezing_and_pruning_train, r2_after_unfreezing_and_pruning_test, \
                    train_loss_freeze_unfreeze, val_loss_freeze_unfreeze
     
-    def train_full_dataset(self, x_train, y_train, epochs, bs, patience, cvfold_id=0, l1_id=0, l2_id=0, \
+    def train_full_dataset(self, x_train, y_train, epochs, bs, patience, cvfold_id=0, l1_id=0, l2_id=0, verbose=1, \
               prune=False, geneNames=None):
         """
         Train the bottleneck for the full dataset (no validation). If you don't prune the training lasts for 2*epochs iterations
@@ -607,6 +613,7 @@ class FreezeUnfreeze:
         :param cvfold_id: int, cross validation set id (optional, default=0)
         :param l1_id: int, lasso penalty id (optional, default=0)
         :param l2_id: int, ridge penalty id (optional, default=0)
+        :param verbose: int, print info or not (optional, default=1, i.e. print info -- verbose=0 means not printing info)
         :param prune: bool, if True we additionally prune the network (new input layer with lower dimensionality)
                       (optional, default=False)
         :param geneNames: numpy 1D array, contains name of the corresponding gene of every input neuron (optional, default=None)
@@ -620,15 +627,16 @@ class FreezeUnfreeze:
         # train the network
         print("[INFO] training network...")
         H = self.m.fit(x_train, y_train, batch_size=bs,
-            epochs=epochs, verbose=1)
+            epochs=epochs, verbose=verbose)
         train_loss_freeze_unfreeze = np.array(H.history["r2_score"])
         
         
         # Now UNFREEZE all layers
         for layer in self.m.layers:
             layer.trainable = True
-        for layer in self.m.layers:
-            print(layer, 'trainable?', layer.trainable)
+        if verbose!=0:
+            for layer in self.m.layers:
+                print(layer, 'trainable?', layer.trainable)
             
         # Since we’ve unfrozen additional layers, we must re-compile the model and let us decrease the learning rate by a half
         self.m.compile(loss='mean_squared_error', optimizer=keras.optimizers.Adam(lr=self.lr/2), metrics=[r2_score, 'mse'])
@@ -637,7 +645,7 @@ class FreezeUnfreeze:
         # train the network again
         print("[INFO] training network...")
         H = self.m.fit(x_train, y_train, batch_size=bs,
-            epochs=epochs, verbose=1)
+            epochs=epochs, verbose=verbose)
         train_loss_freeze_unfreeze = np.concatenate([train_loss_freeze_unfreeze, np.array(H.history["r2_score"])]) 
         self.m.save('KerasSavedModels/FreezeUnfreeze_after_unfreezing_full_dataset_{}_{}_{}.h5'.format(cvfold_id, l1_id, l2_id))
         
@@ -683,7 +691,7 @@ class FreezeUnfreeze:
             # train the network
             print("[INFO] training network...")
             H = self.m.fit(x_train[:, ind_genes], y_train, batch_size=bs,
-                epochs=2*epochs, verbose=1)
+                epochs=2*epochs, verbose=verbose)
             train_loss_freeze_unfreeze = np.concatenate([train_loss_freeze_unfreeze, np.array(H.history["r2_score"])])
 
             return train_loss_freeze_unfreeze
