@@ -1,6 +1,10 @@
 # Sparse Bottleneck Networks for Exploratory Analysis and Visualization of Neural Patch-seq Data
 A sparse bottleneck neural network to predict electrophysiological properties of neurons from their gene expression.
+
+
 ![sBNN architecture](./schematic-autoallo.png)
+
+
 
 Code to reproduce results and figures in the "Sparse Bottleneck Networks for Exploratory Analysisand Visualization of Neural Patch-seq Data" paper (Arxiv link here soon). 
 
@@ -10,7 +14,9 @@ Glmnet, a package to fit generalized linear models with penalties like ridge and
 
 For the bottleneck neural network framework and linear models, cross validation takes on average ~10 minutes. If performed once, the data can be pickled, however, so that one does not need to rerun the models everytime for plotting. Check KerasSavedModels for pickled results. These can indeed directly be used in the notebooks for plotting and to reproduce the figures of the paper.
 
+
 ![sBNN latent space visualisation](./figures/Bottleneck_latent_space_all_together.png)
+
 
 Note: all the data can be found in the folder M1Data which are needed to run the two notebooks (BottleneckNN.ipynb and BottleneckNNLatentVisualization.ipynb) all the way. This is already preprocessed data, however, from a collaborative effort (https://www.biorxiv.org/content/10.1101/2020.02.03.929158v1, under review) working with the original raw data. The preprocessing can be found in BottleneckNNPreProcessing.ipynb which is not needed to reproduce the figures of this paper. To run the BottleneckNNPreProcessing.ipynb notebook, you'll have to un-archive final_patch_seq_allcells_exon_allreads.rar and put final_patch_seq_allcells_exon_allreads.txt in that same folder!
 
