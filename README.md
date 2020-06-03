@@ -1,5 +1,6 @@
 # Sparse Bottleneck Networks for Exploratory Analysis and Visualization of Neural Patch-seq Data
 A sparse bottleneck neural network to predict electrophysiological properties of neurons from their gene expression.
+![Image of sBNN sketch](https://github.com/berenslab/sparseBottleneck/figures/scheme.png)
 
 Code to reproduce results and figures in the "Sparse Bottleneck Networks for Exploratory Analysisand Visualization of Neural Patch-seq Data" paper (Arxiv link here soon). 
 
