@@ -8,7 +8,8 @@ A sparse bottleneck neural network to predict electrophysiological properties of
 
 Code to reproduce results and figures in the "Sparse Bottleneck Networks for Exploratory Analysisand Visualization of Neural Patch-seq Data" paper (Arxiv link here soon). 
 
-Requirements:
+*Requirements:*
+
 TensorFlow and Keras, specifically. We used version 1.13.1 for TensorFlow and 2.2.4 for Keras (https://keras.io/#installation).
 Glmnet, a package to fit generalized linear models with penalties like ridge and lasso (https://github.com/bbalasub1/glmnet_python). These notebooks have not (yet) been tested with TensorFlow 2.
 
@@ -18,7 +19,8 @@ For the bottleneck neural network framework and linear models, cross validation 
 ![sBNN latent space visualisation](./figures/Bottleneck_latent_space_all_together.png)
 
 
-Note: all the data can be found in the folder M1Data which are needed to run the two notebooks (BottleneckNN.ipynb and BottleneckNNLatentVisualization.ipynb) all the way. This is already preprocessed data, however, from a collaborative effort (https://www.biorxiv.org/content/10.1101/2020.02.03.929158v1, under review) working with the original raw data. The preprocessing can be found in BottleneckNNPreProcessing.ipynb which is not needed to reproduce the figures of this paper. To run the BottleneckNNPreProcessing.ipynb notebook, you'll have to un-archive final_patch_seq_allcells_exon_allreads.rar and put final_patch_seq_allcells_exon_allreads.txt in that same folder!
+*Note:*
+all the data can be found in the folder M1Data which are needed to run the two notebooks (BottleneckNN.ipynb and BottleneckNNLatentVisualization.ipynb) all the way. This is already preprocessed data, however, from a collaborative effort (https://www.biorxiv.org/content/10.1101/2020.02.03.929158v1, under review) working with the original raw data. The preprocessing can be found in BottleneckNNPreProcessing.ipynb which is not needed to reproduce the figures of this paper. To run the BottleneckNNPreProcessing.ipynb notebook, you'll have to un-archive final_patch_seq_allcells_exon_allreads.rar and put final_patch_seq_allcells_exon_allreads.txt in that same folder!
 
 Work conducted under supervision of Philipp Berens.
 
