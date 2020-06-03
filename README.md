@@ -1,7 +1,7 @@
-# sparseBottleneck
+# Sparse Bottleneck Networks for Exploratory Analysisand Visualization of Neural Patch-seq Data
 A sparse bottleneck neural network to predict electrophysiological properties of neurons from their gene expression.
 
-Code to reproduce results of: "Sparse Bottleneck Neural Networks for Exploratory Analysis and Visualization of Paired Datasets."
+Code to reproduce results of: "Sparse Bottleneck Networks for Exploratory Analysisand Visualization of Neural Patch-seq Data".
 
 Requirements:
 TensorFlow and Keras, specifically. We used version 1.13.1 for TensorFlow and 2.2.4 for Keras (https://keras.io/#installation).
