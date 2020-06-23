@@ -6,7 +6,7 @@ A sparse bottleneck neural network to predict electrophysiological properties of
 
 
 
-Code to reproduce results and figures in the "Sparse Bottleneck Networks for Exploratory Analysisand Visualization of Neural Patch-seq Data" paper (Arxiv link here soon). 
+Code to reproduce results and figures in the "Sparse Bottleneck Networks for Exploratory Analysisand Visualization of Neural Patch-seq Data" paper: https://arxiv.org/abs/2006.10411. 
 
 **Requirements:**
 
