@@ -13,8 +13,11 @@ For the bottleneck neural network framework and linear models, cross validation 
 ![sBNN latent space visualisation](./figures/combined_figure.png)
 
 
-**Note:**
-all the data can be found in the folder M1Data which are needed to run the two notebooks (BottleneckNN.ipynb and BottleneckNNLatentVisualization.ipynb) all the way. This is already preprocessed data, however, from a collaborative effort (https://www.biorxiv.org/content/10.1101/2020.02.03.929158v1, under review) working with the original raw data. The preprocessing can be found in BottleneckNNPreProcessing.ipynb which is not needed to reproduce the figures of this paper. To run the BottleneckNNPreProcessing.ipynb notebook, you'll have to un-archive final_patch_seq_allcells_exon_allreads.rar and put final_patch_seq_allcells_exon_allreads.txt in that same folder!
+**Data**
+All the data can be found in the folders `data/scala_2020` and `data/gouwens_2020` which are needed to run the notebooks all they way. The former corresponds to the following [Nature](https://www.nature.com/articles/s41586-020-2907-3) study from previous work conducted in this lab. The latter corresponds to work from the Allen Institute reported in [Cell]https://www.cell.com/cell/pdf/S0092-8674(20)31254-X.pdf
+
+**Preprocessing**
+Preprocessing can be found in `preprocess.ipynb`. To run it, make sure you un-archive `data/scala_2020/final_patch_seq_allcells_exon_allreads.rar` and put `final_patch_seq_allcells_exon_allreads.txt` in that same folder!
 
 Work conducted under supervision of Dmitry Kobak and Philipp Berens.
 
