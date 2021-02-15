@@ -16,7 +16,7 @@ Glmnet, a package to fit generalized linear models with penalties like ridge and
 For the bottleneck neural network framework and linear models, cross validation takes on average ~10 minutes. If performed once, the data can be pickled, however, so that one does not need to rerun the models everytime for plotting. Check KerasSavedModels for pickled results. These can indeed directly be used in the notebooks for plotting and to reproduce the figures of the paper.
 
 
-![sBNN latent space visualisation](./figures/Bottleneck_latent_space_all_together.png)
+![sBNN latent space visualisation](./figures/combined_figure.png)
 
 
 **Note:**
