@@ -1,13 +1,7 @@
 # Sparse Bottleneck Networks for Exploratory Analysis and Visualization of Neural Patch-seq Data
 A sparse bottleneck neural network to predict electrophysiological properties of neurons from their gene expression.
-
-
-![sBNN architecture](./schematic-autoallo.png)
-
-
-
-Code to reproduce results and figures in the "Sparse Bottleneck Networks for Exploratory Analysisand Visualization of Neural Patch-seq Data" paper: https://arxiv.org/abs/2006.10411. 
-
+Code to produce results and figures in "Sparse Bottleneck Networks for Exploratory Analysisand Visualization of Neural Patch-seq Data" paper: https://arxiv.org/abs/2006.10411, but also more has been added.
+<br><br>
 **Requirements:**
 
 TensorFlow and Keras, specifically. We used version 1.13.1 for TensorFlow and 2.2.4 for Keras (https://keras.io/#installation).
