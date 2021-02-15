@@ -12,7 +12,7 @@ For the sparse bottleneck neural network framework and linear models, cross vali
 
 
 ## Data
-All the data can be found in the folders `data/scala_2020` and `data/gouwens_2020` which are needed to run the notebooks all they way. The former corresponds to the following [Nature](https://www.nature.com/articles/s41586-020-2907-3) study from previous work conducted in this lab. The latter corresponds to work from the Allen Institute reported in [Cell](https://www.cell.com/cell/pdf/S0092-8674(20)31254-X.pdf)
+All the data can be found in the folders `data/scala_2020` and `data/gouwens_2020` which are needed to run the notebooks all they way. The former corresponds to the following [Nature](https://www.nature.com/articles/s41586-020-2907-3) study from previous work conducted in this lab. The latter corresponds to work from the Allen Institute reported in [Cell](https://www.cell.com/cell/pdf/S0092-8674(20)31254-X.pdf).
 
 ## Preprocessing
 Preprocessing can be found in `preprocess.ipynb`. To run it, make sure you un-archive `data/scala_2020/final_patch_seq_allcells_exon_allreads.rar` and put `final_patch_seq_allcells_exon_allreads.txt` in that same folder!
