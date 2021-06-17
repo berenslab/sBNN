@@ -18,10 +18,10 @@ All the data can be found in the folders `data/scala_2020`, `data/gouwens_2020` 
 Preprocessing can be found in `preprocess.ipynb`. To run it, make sure you un-archive `data/scala_2020/final_patch_seq_allcells_exon_allreads.rar` and put `final_patch_seq_allcells_exon_allreads.txt` in that same folder!
 
 ## Cross validation
-Cross validation has been performed for both frameworks sparse reduced-rank regression and the sparse bottleneck neural network applied to Scala et al. 2020 and Gouwens et al. 2020 data in `M1_cv.ipynb` and `V1_cv.ipynb` respectively. Results are pickled in `KerasSavedModels` so it's possible to produce figures also without running the cross validation.
+Cross validation has been performed for both frameworks sparse reduced-rank regression and the sparse bottleneck neural network applied to the M1, V1 and CITE-seq dataset in `M1_cv.ipynb`, `V1_cv.ipynb` and `CITE-seq_cv.ipynb` respectively. Results are pickled in `KerasSavedModels` so it's possible to produce figures also without running the cross validation.
 
 ## Figures
-With optimal parameters deduced from the cross validation, one can run models for the full datasets in `V1_full_dataset.ipynb` and `M1_full_dataset.ipynb`. Trained neural network weights will be saved in `KerasSavedModels` and can then be used to produce final figures in `combined_figure.ipynb`.
+With optimal parameters deduced from the cross validation, one can run models for the full datasets in `V1_full_dataset.ipynb`, `M1_full_dataset.ipynb` and `CITE-seq_full_dataset`. Trained neural network weights will be saved in `KerasSavedModels` and can then be used to produce final figures in `combined_figure.ipynb`.
 
 ## CITE-seq
 We also show sBNN's efficacy beyond Patch-seq on another dataset from Stoeckius et al., 2017 in [Nature Methods](https://www.nature.com/articles/nmeth.4380). Analogously, cross-validation results can be found in `CITE-seq_cv.ipynb` and latent visualizations in `CITE-seq_full_dataset.ipynb`.
