@@ -1,6 +1,6 @@
 # Sparse bottleneck neural networks for exploratory non-linear visualization of Patch-seq data
 A sparse bottleneck neural network to predict electrophysiological properties of neurons from their gene expression.
-Work here is an extension of the "Sparse Bottleneck Networks for Exploratory Analysis and Visualization of Neural Patch-seq Data" paper: https://arxiv.org/abs/2006.10411.
+Code corresponds to work found on [ArXiv]https://arxiv.org/abs/2006.10411.
 ![sBNN latent space visualisation](./figures/combined_figure.png)
 <br><br>
 ## Requirements:
