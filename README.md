@@ -8,7 +8,7 @@ Code corresponds to work found on [ArXiv](https://arxiv.org/abs/2006.10411).
 TensorFlow and Keras, specifically. We used version 1.13.1 for TensorFlow and 2.2.4 for Keras (https://keras.io/#installation).
 Glmnet, a package to fit generalized linear models with penalties like ridge and lasso (https://github.com/bbalasub1/glmnet_python). These notebooks have not been tested with TensorFlow 2.
 
-For the sparse bottleneck neural network framework and linear models, cross validation takes on average ~10 minutes. If performed once, the data can be pickled, however, so that one does not need to rerun the models everytime for plotting. Check `KerasSavedModels/scala_2020` and `KerasSavedModels/gouwens_2020` for pickled results. These can indeed directly be used in the notebooks for plotting and reproducing figures.
+For the sparse bottleneck neural network framework and linear models, cross validation takes on average ~10 minutes. If performed once, the data can be pickled, however, so that one does not need to rerun the models everytime for plotting. Check `KerasSavedModels/scala_2020`, `KerasSavedModels/gouwens_2020` and `KerasSavedModels/stoeckius_2017` for pickled results. These can indeed directly be used in the notebooks for plotting and reproducing figures.
 
 
 ## Data
