@@ -26,6 +26,6 @@ With optimal parameters deduced from the cross validation, one can run models fo
 
 Work conducted under supervision of Dmitry Kobak and Philipp Berens.
 <br><br>
-Contact: yves.bernaerts@uni-tuebingen.de
+Contact: yves.bernaerts@research.fchampalimaud.org
 <br><br>
 Website: http://www.eye-tuebingen.de/berenslab/members/yves-bernaerts/
