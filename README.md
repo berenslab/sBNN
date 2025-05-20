@@ -28,5 +28,5 @@ Work conducted under supervision of Dmitry Kobak and Philipp Berens.
 <br><br>
 
 ## Contact
-Lead contact: philipp.berens@uni-tuebingen.de
+Lead contact: philipp.berens@uni-tuebingen.de <br>
 First author contact: yves.bernaerts@research.fchampalimaud.org
